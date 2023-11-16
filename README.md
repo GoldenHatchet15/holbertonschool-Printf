@@ -1,2 +1,1 @@
-holbertonschool-Printf
-colaborador 1
+colaborador 2
