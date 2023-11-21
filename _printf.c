@@ -11,7 +11,7 @@
 *toendoutputofstrings)
 */
 
-int_printf(constchar*format,...)
+int_printf(const char *format,...)
 {
 va_listargs;
 intcount=0;
