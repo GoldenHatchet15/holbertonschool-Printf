@@ -11,8 +11,7 @@
  *         to end output of strings)
  */
 
-int main(void)
-{
+
 
 int _printf(const char *format, ...)
 {
@@ -58,5 +57,13 @@ va_end(args);
 
 return (count);
 }
-return(0);
+
+/* Main function for testing _printf */
+int main(void)
+{
+_printf("Character: %c\n", 'A');
+_printf("String: %s\n", "Hello, World");
+_printf("Percent sign: %%\n");
+
+ return (0);
 }
