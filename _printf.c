@@ -10,8 +10,6 @@
 *Return:Numberofcharactersprinted(excludingthenullbyteused
 *toendoutputofstrings)
 */
-
-
 int _printf(const char *format, ...)
 {
     va_list args;
@@ -27,7 +25,7 @@ int _printf(const char *format, ...)
         if (*format == '%')
         {
             format++;
-            
+           
             if (*format == '\0')
             {
                 
@@ -39,20 +37,19 @@ int _printf(const char *format, ...)
                     count += _putchar(va_arg(args, int));
                     break;
                 case 's':
-                    {
-                        char *s = va_arg(args, char *);
-                        if (!s)
-                            s = "(null)";
-                        while (*s)
-                            count += _putchar(*s++);
-                    }
+                {
+                    char *s = va_arg(args, char *);
+                    if (!s)
+                        s = "(null)";
+                    while (*s)
+                        count += _putchar(*s++);
                     break;
+                }
                 case '%':
                     count += _putchar('%');
                     break;
                 default:
                     
-                    count += _putchar('%');
                     count += _putchar(*format);
                     break;
             }
