@@ -13,13 +13,13 @@
 
 int_printf(const char *format,...)
 {
-va_listargs;
-intcount=0;
+va _listargs;
+int count=0;
 
 if(!format)
 return(-1);
 
-va_start(args,format);
+va _start(args,format);
 
 while(*format)
 {
@@ -60,7 +60,7 @@ count+=_putchar(*format);
 format++;
 }
 
-va_end(args);
+va _end(args);
 
 return(count);
 }
