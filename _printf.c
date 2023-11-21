@@ -1,15 +1,8 @@
-#include<stdarg.h>
-#include<stdio.h>
-#include"main.h"
-#include<unistd.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include "main.h"
+#include <unistd.h>
 
-/**
-*_printf-Customprintffunctiontooutputaccordingtoaformat.
-*@format:Formatstringcontainingspecifiers(%c,%s,%%).
-*Doesn'thandleflags,fieldwidth,precision,orlength.
-*Return:Numberofcharactersprinted(excludingthenullbyteused
-*toendoutputofstrings)
-*/
 int _printf(const char *format, ...)
 {
     va_list args;
@@ -25,10 +18,10 @@ int _printf(const char *format, ...)
         if (*format == '%')
         {
             format++;
-           
+            
             if (*format == '\0')
             {
-                
+                count += _putchar('%');
                 break;
             }
             switch (*format)
@@ -50,6 +43,7 @@ int _printf(const char *format, ...)
                     break;
                 default:
                     
+                    count += _putchar('%');
                     count += _putchar(*format);
                     break;
             }
