@@ -60,7 +60,7 @@ count+=_putchar(*format);
 format++;
 }
 
-va _end(args);
+va_end(args);
 
 return(count);
 }
