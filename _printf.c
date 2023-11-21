@@ -3,6 +3,18 @@
 #include "main.h"
 
 /**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1, on error -1
+ */
+int _putchar(char c)
+{
+return write(1, &c, 1);
+}
+
+
+/**
 * _printf - Custom printf function with limited format specifiers.
 * @format: Format string containing specifiers (%c, %s, %%).
 *          Doesn't handle flags, field width, precision, or length.
