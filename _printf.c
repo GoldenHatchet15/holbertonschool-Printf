@@ -11,51 +11,58 @@
  *         to end output of strings)
  */
 
-
-
 int _printf(const char *format, ...)
 {
-va_list args;
-int count = 0;
+    va_list args;
+    int count = 0;
 
-va_start(args, format);
+    if (!format)
+        return (-1);
 
-while (*format)
-{
-if (*format == '%')
-{
-format++;
-switch (*format)
-{
-case 'c':
-count += _putchar(va_arg(args, int));
-break;
-case 's':
-{
-char *s = va_arg(args, char *);
-while (s && *s)
-{
-count += _putchar(*s++);
-}
-}
-break;
-case '%':
-count += _putchar('%');
-break;
-default:
-break;
-}
-}
-else
-{
-count += _putchar(*format);
-}
-format++;
-}
+    va_start(args, format);
 
-va_end(args);
+    while (*format)
+    {
+        if (*format == '%')
+        {
+            format++;
+            if (!*format)
+            {
+                count += _putchar('%');
+                break;
+            }
+            switch (*format)
+            {
+                case 'c':
+                    count += _putchar(va_arg(args, int));
+                    break;
+                case 's':
+                    {
+                        char *s = va_arg(args, char *);
+                        if (!s)
+                            s = "(null)";
+                        while (*s)
+                            count += _putchar(*s++);
+                    }
+                    break;
+                case '%':
+                    count += _putchar('%');
+                    break;
+                default:
+                    count += _putchar('%');
+                    count += _putchar(*format);
+                    break;
+            }
+        }
+        else
+        {
+            count += _putchar(*format);
+        }
+        if (*format)
+            format++;
+    }
 
-return (count);
+    va_end(args);
+
+    return (count);
 }
-
-
