@@ -11,15 +11,15 @@
 *toendoutputofstrings)
 */
 
-int_printf(const char *format,...)
+int _printf(const char *format,...)
 {
-va _listargs;
+va_list args;
 int count=0;
 
 if(!format)
 return(-1);
 
-va _start(args,format);
+va_start(args,format);
 
 while(*format)
 {
