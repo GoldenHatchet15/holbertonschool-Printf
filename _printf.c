@@ -1,75 +1,67 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include "main.h"
+#include<stdarg.h>
+#include<stdio.h>
+#include"main.h"
+#include<unistd.h>
 
 /**
-* _putchar - writes the character c to stdout
-* @c: The character to print
-*
-* Return: On success 1, on error -1
-*/
-int _putchar(char c)
-{
-return write(1, &c, 1);
-}
-
-
-/**
-* _printf - Custom printf function with limited format specifiers.
+* _printf- Custom printf function to output according to a format.
 * @format: Format string containing specifiers (%c, %s, %%).
-*          Doesn't handle flags, field width, precision, or length.
-*
+* Doesn't handle flags, field width, precision, or length.
 * Return: Number of characters printed (excluding the null byte used
-*         to end output of strings)
+* to end output of strings)
 */
 int _printf(const char *format, ...)
 {
 va_list args;
 int count = 0;
 
+if (!format)
+return (-1);
+
 va_start(args, format);
 
-while (*format != '\0')
+while (*format)
 {
 if (*format == '%')
 {
 format++;
+// Check if the next character is the end of the string
+if (*format == '\0')
+{
+// Exit the loop, do not print anything for standalone '%'
+break;
+}
 switch (*format)
 {
 case 'c':
-{
-char c = (char)va_arg(args, int);
-putchar(c);
-count++;
+count += _putchar(va_arg(args, int));
 break;
-}
 case 's':
 {
-const char *s = va_arg(args, const char *);
-while (*s != '\0')
-{
-putchar(*s);
-s++;
-count++;
+char *s = va_arg(args, char *);
+if (!s)
+s = "(null)";
+while (*s)
+count += _putchar(*s++);
 }
 break;
-}
 case '%':
-putchar('%');
-count++;
+count += _putchar('%');
 break;
 default:
+// Print both the '%' and the following character
+count += _putchar('%');
+count += _putchar(*format);
 break;
 }
 }
 else
 {
-putchar(*format);
-count++;
+count += _putchar(*format);
 }
 format++;
 }
+
 va_end(args);
 
 return (count);
