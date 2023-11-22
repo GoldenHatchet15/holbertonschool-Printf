@@ -51,8 +51,11 @@ digits++;
 }
 }
 divisor = 1;
-for (i = 1; i < digits; i++)
+while (digits > 1)
+{
 divisor *= 10;
+digits--;
+}
 
 while (digits > 0)
 {
@@ -60,7 +63,6 @@ digits = num / divisor;
 count += write(1, &digits + '0', 1);
 num %= divisor;
 divisor /= 10;
-digits--;
 }
 
 format++;
