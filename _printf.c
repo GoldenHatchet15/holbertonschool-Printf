@@ -1,7 +1,8 @@
-#include<stdarg.h>
-#include<stdio.h>
-#include"main.h"
-#include<unistd.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include "main.h"
+#include <unistd.h>
+
 
 /**
 * _printf- Custom printf function to output according to a format.
