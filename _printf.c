@@ -25,10 +25,10 @@ while (*format)
 if (*format == '%')
 {
 format++;
-// Check if the next character is the end of the string
+
 if (*format == '\0')
 {
-// Exit the loop, do not print anything for standalone '%'
+
 break;
 }
 switch (*format)
@@ -49,7 +49,7 @@ case '%':
 count += _putchar('%');
 break;
 default:
-// Print both the '%' and the following character
+
 count += _putchar('%');
 count += _putchar(*format);
 break;
