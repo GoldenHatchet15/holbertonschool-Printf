@@ -1,79 +1,112 @@
-#include "main.h"
 #include <stdarg.h>
+#include <stdio.h>
+#include <limits.h>
 #include <unistd.h>
+#include "main.h"
 
 /**
-* _printf - Custom printf function to output according to a format.
-* @format: Format string containing specifiers (%d, %i).
-* Doesn't handle flags, field width, precision, or length.
-* Return: Number of characters printed (excluding the null byte
-* used to end output of strings).
-*/
-int main(const char *format, ...)
+ * _printf - Custom printf function to output according to a format.
+ * @format: Format string containing specifiers (%c, %s, %%, %d, %i).
+ * Return: Number of characters printed (excluding the null byte used to end output of strings)
+ */
+int _printf(const char *format, ...)
 {
+    va_list args;
+    int count = 0, num, temp, digits;
+    char digit_char;
 
-va_list args;
-int count = 0;
-int num;
-int digits;
-int temp;
-int divisor;
+    if (!format)
+        return (-1);
 
-if (!format)
-return (-1);
+    va_start(args, format);
 
-va_start(args, format);
+    while (*format)
+    {
+        if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
+        {
+            num = va_arg(args, int);
+            digits = 0;
 
-while (*format)
-{
-if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
-{
-num = va_arg(args, int);
-digits = 0;
+            if (num == 0)
+            {
+                count += write(1, "0", 1);
+            }
+            else
+            {
+                if (num < 0)
+                {
+                    count += write(1, "-", 1);
+                    if (num == INT_MIN)
+                    {
+		      count += write(1, "2147483648", 10); /* Special case handling */
+                        format += 2;
+                        continue;
+                    }
+                    else
+                    {
+                        num = -num;
+                    }
+                }
 
-if(num < 0)
-{
-count += write(1, "-", 1);
-num = -num;
-}
+                temp = num;
+                while (temp != 0)
+                {
+                    temp /= 10;
+                    digits++;
+                }
 
-if (num == 0)
-{
-count += write(1, "0", 1);
-}
-else
-{
-temp = num;
-while (temp > 0)
-{
-temp /= 10;
-digits++;
-}
-}
-divisor = 1;
-while (digits > 1)
-{
-divisor *= 10;
-digits--;
-}
+                int divisor = 1;
+                for (int i = 1; i < digits; i++)
+                {
+                    divisor *= 10;
+                }
 
-while (digits > 0)
-{
-digits = num / divisor % 10;
-count += write(1, &digits + '0', 1);
-num %= divisor;
-divisor /= 10;
-}
+                while (divisor > 0)
+                {
+                    digit_char = (num / divisor) % 10 + '0';
+                    count += write(1, &digit_char, 1);
+                    num %= divisor;
+                    divisor /= 10;
+                }
+            }
 
-format += 2;
-}
-else
-{
-count += write(1, format, 1);
-}
-format++;
-}
-va_end(args);
+            format += 2;
+        }
+        else if (*format == '%')
+        {
+            format++;
+            switch (*format)
+            {
+                case 'c':
+		  digit_char = (char)va_arg(args, int); /* handle char */
+                    count += write(1, &digit_char, 1);
+                    break;
+                case 's':
+                {
+		  char *s = va_arg(args, char *); /* handle string */
+                    if (!s)
+                        s = "(null)";
+                    while (*s)
+                        count += write(1, s++, 1);
+                    break;
+                }
+                case '%':
+		  count += write(1, "%", 1); /* handle %% */
+                    break;
+                default:
+		  count += write(1, format, 1); /* handle unrecognized specifiers */
+                    break;
+            }
+            format++;
+        }
+        else
+        {
+            count += write(1, format, 1);
+            format++;
+        }
+    }
 
-return (count);
+    va_end(args);
+
+    return (count);
 }
