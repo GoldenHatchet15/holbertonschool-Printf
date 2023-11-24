@@ -9,7 +9,7 @@
 * Return: Number of characters printed (excluding the null byte
 * used to end output of strings).
 */
-int _printf(const char *format, ...)
+int main(void)
 {
 va_list args;
 int count = 0;
@@ -17,7 +17,7 @@ int num;
 int digits;
 int temp;
 int divisor;
- 
+
 if (!format)
 return (-1);
 
