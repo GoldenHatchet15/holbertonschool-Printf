@@ -17,7 +17,8 @@ int num;
 int digits;
 int temp;
 int divisor;
-
+int i;
+ 
 if (!format)
 return (-1);
 
