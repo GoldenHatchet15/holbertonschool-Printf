@@ -17,7 +17,6 @@ int num;
 int digits;
 int temp;
 int divisor;
-int i;
  
 if (!format)
 return (-1);
@@ -26,7 +25,7 @@ va_start(args, format);
 
 while (*format)
 {
-if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
+if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == '1'))
 {
 num = va_arg(args, int);
 digits = 0;
