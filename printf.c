@@ -17,8 +17,7 @@ int num;
 int digits;
 int temp;
 int divisor;
-int i;
-
+ 
 if (!format)
 return (-1);
 
@@ -59,7 +58,7 @@ digits--;
 
 while (digits > 0)
 {
-digits = num / divisor;
+digits = num / divisor % 10;
 count += write(1, &digits + '0', 1);
 num %= divisor;
 divisor /= 10;
