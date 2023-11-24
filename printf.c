@@ -9,8 +9,9 @@
 * Return: Number of characters printed (excluding the null byte
 * used to end output of strings).
 */
-int main(void)
+int _printf(const char *format, ...)
 {
+
 va_list args;
 int count = 0;
 int num;
@@ -25,7 +26,7 @@ va_start(args, format);
 
 while (*format)
 {
-if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == '1'))
+if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
 num = va_arg(args, int);
 digits = 0;
@@ -64,7 +65,7 @@ num %= divisor;
 divisor /= 10;
 }
 
-format++;
+format += 2;
 }
 else
 {
