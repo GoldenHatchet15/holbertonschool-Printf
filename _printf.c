@@ -11,10 +11,6 @@
 * Return: Number of characters printed (excluding the null byte used
 * to end output of strings)
 */
-int _putchar(char c)
-{
-return (write(1, &c, 1));
-}
 
 int _printf(const char *format, ...)
 {
