@@ -12,7 +12,7 @@
 int _printf(const char *format, ...)
 {
     va_list args;
-    int count = 0, num, temp, digits;
+    int count = 0, num, temp, digits, i, divisor;
     char digit_char;
 
     if (!format)
@@ -55,8 +55,8 @@ int _printf(const char *format, ...)
                     digits++;
                 }
 
-                int divisor = 1;
-                for (int i = 1; i < digits; i++)
+                divisor = 1;
+                for (i = 1; i < digits; i++)
                 {
                     divisor *= 10;
                 }
