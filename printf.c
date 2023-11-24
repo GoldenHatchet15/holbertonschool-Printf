@@ -26,7 +26,7 @@ va_start(args, format);
 
 while (*format)
 {
-if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == '1'))
+if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
 {
 num = va_arg(args, int);
 digits = 0;
@@ -59,7 +59,7 @@ digits--;
 
 while (digits > 0)
 {
-digits = num / divisor;
+digits = num / divisor % 10;
 count += write(1, &digits + '0', 1);
 num %= divisor;
 divisor /= 10;
