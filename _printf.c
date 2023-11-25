@@ -1,8 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
-#include "main.h"
 #include <unistd.h>
-
 
 /**
 * _printf- Custom printf function to output according to a format.
@@ -12,59 +10,66 @@
 * to end output of strings)
 */
 
-int _printf(const char *format, ...)
-{
-va_list args;
-int count = 0;
-
-if (!format)
-return (-1);
-
-va_start(args, format);
-
-while (*format)
-{
-if (*format == '%')
-{
-format++;
-
-if (*format == '\0')
-{
-
-break;
-}
-switch (*format)
-{
-case 'c':
-count += _putchar(va_arg(args, int));
-break;
-case 's':
-{
-char *s = va_arg(args, char *);
-if (!s)
-s = "(null)";
-while (*s)
-count += _putchar(*s++);
-}
-break;
-case '%':
-count += _putchar('%');
-break;
-default:
-
-count += _putchar('%');
-count += _putchar(*format);
-break;
-}
-}
-else
-{
-count += _putchar(*format);
-}
-format++;
+int _putchar(char c) {
+    return write(1, &c, 1);
 }
 
-va_end(args);
+int print_char(va_list args) {
+    return _putchar(va_arg(args, int));
+}
 
-return (count);
+int print_string(va_list args) {
+    char *s = va_arg(args, char *);
+    int count = 0;
+    if (!s) s = "(null)";
+    while (*s) {
+        count += _putchar(*s++);
+    }
+    return count;
+}
+
+int print_percent(__attribute__((unused)) va_list args) {
+    return _putchar('%');
+}
+
+typedef struct {
+    char specifier;
+    int (*f)(va_list);
+} format_t;
+
+int _printf(const char *format, ...) {
+    va_list args;
+    int count = 0;
+    va_start(args, format);
+    
+    format_t formats[] = {
+        {'c', print_char},
+        {'s', print_string},
+        {'%', print_percent},
+        {'\0', NULL}
+    };
+
+    while (*format) {
+        if (*format == '%') {
+            format++;
+            int i = 0;
+            while (formats[i].specifier) {
+                if (formats[i].specifier == *format) {
+                    count += formats[i].f(args);
+                    break;
+                }
+                i++;
+            }
+            if (formats[i].specifier == '\0') {
+                count += _putchar('%');
+                count += _putchar(*format);
+            }
+        } else {
+            count += _putchar(*format);
+        }
+        format++;
+    }
+
+    va_end(args);
+    return count;
 }
