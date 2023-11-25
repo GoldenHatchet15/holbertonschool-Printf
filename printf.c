@@ -6,15 +6,18 @@
 
 int handle_integer(va_list *args) {
     int num = va_arg(*args, int);
-    char buffer[12]; 
-    sprintf(buffer, "%d", num); 
-    char *s = buffer;
+    char buffer[12];
+    char *s;          
     int count = 0;
+
+    sprintf(buffer, "%d", num); 
+    s = buffer;
     while (*s) {
-        count += write(1, s++, 1); 
+        count += write(1, s++, 1);
     }
     return (count);
 }
+
 
 int handle_char(va_list *args) {
     char c = (char)va_arg(*args, int);
