@@ -54,11 +54,19 @@ format_specifier specifiers[] = {
 int _printf(const char *format, ...) {
     va_list args;
     int count = 0, i;
+    
+    if (!format)
+        return (-1);
+
     va_start(args, format);
 
     while (*format) {
         if (*format == '%') {
             format++;
+            if (*format == '\0') {
+	      count += _putchar('%'); /* Or handle differently if desired*/
+                break;
+            }
             for (i = 0; specifiers[i].specifier; i++) {
                 if (*format == specifiers[i].specifier) {
                     count += specifiers[i].handler(&args);
