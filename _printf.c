@@ -32,11 +32,11 @@ int handle_string(va_list *args) {
 }
 
 int handle_percent(va_list *args) {
-    (void)args; // Unused parameter
+  (void)args; /* Unused parameter*/
     return _putchar('%');
 }
 
-//* Struct to associate specifiers with handler functions*/
+/* Struct to associate specifiers with handler functions*/
 typedef struct {
     char specifier;
     handler_func handler;
