@@ -13,6 +13,7 @@ int len;
 int len2;
 unsigned int ui;
 void *addr;
+int myNumber = 42;
 
 len = _printf("Let's try to printf a simple sentence.\n");
 len2 = printf("Lets's try to printf a simple sentence.\n");
@@ -35,10 +36,10 @@ printf("String:[%s]\n", "I am a string !");
 _printf("Address:[%p]\n", addr);
 printf("Address:[%p]\n", addr);
 len = _printf("Percent:[%%]\n");
-len2 = printf("Percent:[%%]\n");
+len2 = printf("Percent:[%%]\n"); 
 _printf("Len:[%d]\n", len);
 printf("Len:[%d]\n", len2);
-_printf("Unknown:[%r]\n");
-printf("Unknown:[%r]\n");
-return (0);
+_printf("Unknown:[%d]\n", myNumber);
+printf("Unknown:[%d]\n", myNumber);
+return(0);
 }
