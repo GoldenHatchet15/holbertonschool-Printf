@@ -4,38 +4,64 @@
 #include "main.h"
 #include <stdio.h>
 
-int handle_integer(va_list *args) {
+/**
+ * handle_integer - Converts an integer to a string and sends it to stdout.
+ * @args: A va_list of arguments from _printf.
+ * Return: The number of characters printed.
+ */
+int handle_integer(va_list *args)
+{
     int num = va_arg(*args, int);
     char buffer[12];
-    char *s;          
+    char *s;
     int count = 0;
 
-    sprintf(buffer, "%d", num); 
+    sprintf(buffer, "%d", num);
     s = buffer;
-    while (*s) {
+    while (*s)
+    {
         count += write(1, s++, 1);
     }
     return (count);
 }
 
-
-int handle_char(va_list *args) {
+/**
+ * handle_char - Sends a character to stdout.
+ * @args: A va_list of arguments from _printf.
+ * Return: 1 (number of characters printed).
+ */
+int handle_char(va_list *args)
+{
     char c = (char)va_arg(*args, int);
     return (write(1, &c, 1));
 }
 
-int handle_string(va_list *args) {
+/**
+ * handle_string - Sends a string to stdout.
+ * @args: A va_list of arguments from _printf.
+ * Return: The number of characters printed.
+ */
+int handle_string(va_list *args)
+{
     char *s = va_arg(*args, char *);
     int count = 0;
+    
     if (!s)
         s = "(null)";
-    while (*s) {
+    while (*s)
+    {
         count += write(1, s++, 1);
     }
     return (count);
 }
 
-int _printf(const char *format, ...) { 
+/**
+ * _printf - Outputs a formatted string to stdout.
+ * @format: A format string containing specifiers.
+ * Return: The number of characters printed (excluding null byte).
+ */
+int _printf(const char *format, ...)
+{
     va_list args;
     int count = 0;
 
@@ -43,11 +69,13 @@ int _printf(const char *format, ...) {
         return (-1);
 
     va_start(args, format);
-
-    while (*format) {
-        if (*format == '%') {
+    while (*format)
+    {
+        if (*format == '%')
+        {
             format++;
-            switch (*format) {
+            switch (*format)
+            {
                 case 'd':
                 case 'i':
                     count += handle_integer(&args);
@@ -62,17 +90,18 @@ int _printf(const char *format, ...) {
                     count += write(1, "%", 1);
                     break;
                 default:
-                    count += write(1, format, 1); 
+                    count += write(1, "%", 1);
+                    count += write(1, format, 1);
                     break;
             }
             format++;
-        } else {
+        }
+        else
+        {
             count += write(1, format, 1);
             format++;
         }
     }
-
     va_end(args);
-
     return (count);
 }
