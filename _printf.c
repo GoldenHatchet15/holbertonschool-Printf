@@ -6,12 +6,32 @@
 /* Handler function type */
 typedef int (*handler_func)(va_list *);
 
-/* Handler functions */
+/**
+ * handle_char - Prints a character
+ * @args: Argument list pointing to the character to be printed
+ * Return: Number of characters printed
+ */
 int handle_char(va_list *args);
+
+/**
+ * handle_string - Prints a string
+ * @args: Argument list pointing to the string to be printed
+ * Return: Number of characters printed
+ */
 int handle_string(va_list *args);
+
+/**
+ * handle_percent - Prints a percent symbol
+ * @args: Argument list, unused in this function
+ * Return: Number of characters printed
+ */
 int handle_percent(va_list *args);
 
-/* Struct to associate specifiers with handler functions */
+/**
+ * struct format_specifier - Associates format specifiers with handler functions
+ * @specifier: Character representing the format specifier
+ * @handler: Function pointer to the handler function for the specifier
+ */
 typedef struct format_specifier {
     char specifier;
     handler_func handler;
