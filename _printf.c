@@ -10,12 +10,16 @@
 * to end output of strings)
 */
 
+#include <stdarg.h>
+#include <stdio.h>
+#include <unistd.h>
+
 int _putchar(char c) {
-    return write(1, &c, 1);
+  return (write(1, &c, 1));
 }
 
 int print_char(va_list args) {
-    return _putchar(va_arg(args, int));
+  return (_putchar(va_arg(args, int)));
 }
 
 int print_string(va_list args) {
@@ -25,11 +29,11 @@ int print_string(va_list args) {
     while (*s) {
         count += _putchar(*s++);
     }
-    return count;
+    return (count);
 }
 
 int print_percent(__attribute__((unused)) va_list args) {
-    return _putchar('%');
+  return (_putchar('%'));
 }
 
 typedef struct {
@@ -40,8 +44,7 @@ typedef struct {
 int _printf(const char *format, ...) {
     va_list args;
     int count = 0;
-    va_start(args, format);
-    
+    int i;
     format_t formats[] = {
         {'c', print_char},
         {'s', print_string},
@@ -49,20 +52,22 @@ int _printf(const char *format, ...) {
         {'\0', NULL}
     };
 
+    va_start(args, format);
+    
     while (*format) {
         if (*format == '%') {
             format++;
-            int i = 0;
-            while (formats[i].specifier) {
+            for (i = 0; formats[i].specifier; i++) {
                 if (formats[i].specifier == *format) {
                     count += formats[i].f(args);
                     break;
                 }
-                i++;
             }
             if (formats[i].specifier == '\0') {
                 count += _putchar('%');
-                count += _putchar(*format);
+                if (*format != '\0') {
+                    count += _putchar(*format);
+                }
             }
         } else {
             count += _putchar(*format);
@@ -71,5 +76,5 @@ int _printf(const char *format, ...) {
     }
 
     va_end(args);
-    return count;
+    return (count);
 }
