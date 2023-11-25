@@ -50,12 +50,11 @@ format_specifier specifiers[] = {
     {0, NULL} /* Null terminator*/
 };
 
-/* Custom printf function*/
-
+/* Custom printf function */
 int _printf(const char *format, ...) {
     va_list args;
     int count = 0, i;
-    
+
     if (!format)
         return (-1);
 
@@ -65,18 +64,21 @@ int _printf(const char *format, ...) {
         if (*format == '%') {
             format++;
             if (*format == '\0') {
-	      /* Do not print anything and break*/
+                
                 break;
             }
+
             for (i = 0; specifiers[i].specifier; i++) {
                 if (*format == specifiers[i].specifier) {
                     count += specifiers[i].handler(&args);
                     break;
                 }
             }
+
+            
             if (!specifiers[i].specifier) {
-                count += _putchar('%');
-                count += _putchar(*format);
+                
+                continue;
             }
         } else {
             count += _putchar(*format);
@@ -87,6 +89,9 @@ int _printf(const char *format, ...) {
     va_end(args);
     return (count);
 }
+
+
+
 
 
 
