@@ -51,6 +51,7 @@ format_specifier specifiers[] = {
 };
 
 /* Custom printf function*/
+
 int _printf(const char *format, ...) {
     va_list args;
     int count = 0, i;
@@ -64,7 +65,7 @@ int _printf(const char *format, ...) {
         if (*format == '%') {
             format++;
             if (*format == '\0') {
-	      count += _putchar('%'); /* Or handle differently if desired*/
+	      /* Do not print anything and break*/
                 break;
             }
             for (i = 0; specifiers[i].specifier; i++) {
@@ -74,7 +75,6 @@ int _printf(const char *format, ...) {
                 }
             }
             if (!specifiers[i].specifier) {
-	      /* Handle unknown format specifier*/
                 count += _putchar('%');
                 count += _putchar(*format);
             }
@@ -87,5 +87,6 @@ int _printf(const char *format, ...) {
     va_end(args);
     return (count);
 }
+
 
 
