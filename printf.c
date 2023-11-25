@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <unistd.h>
 #include "main.h"
+#include <stdio.h>
 
 int handle_integer(va_list *args) {
     int num = va_arg(*args, int);
