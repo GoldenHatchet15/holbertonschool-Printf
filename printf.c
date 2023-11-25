@@ -35,7 +35,7 @@ int handle_string(va_list *args) {
     return (count);
 }
 
-int _printf(const char *format, ...) {
+int _printf(const char *format, ...) { 
     va_list args;
     int count = 0;
 
