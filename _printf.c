@@ -1,6 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "main.h"
 
 /**
 * _printf- Custom printf function to output according to a format.
@@ -11,60 +12,63 @@
 */
 
 
-int _putchar(char c) {
-    return write(1, &c, 1);
+
+/* Function pointer type for handler functions*/
+typedef int (*handler_func)(va_list *);
+
+/* Handler functions*/
+int handle_char(va_list *args) {
+    return _putchar(va_arg(*args, int));
 }
 
-int print_char(va_list args) {
-  return (_putchar(va_arg(args, int)));
-}
-
-int print_string(va_list args) {
-    char *s = va_arg(args, char *);
+int handle_string(va_list *args) {
+    char *s = va_arg(*args, char *);
     int count = 0;
-    if (!s) s = "(null)";
-    while (*s) {
+    if (!s)
+        s = "(null)";
+    while (*s)
         count += _putchar(*s++);
-    }
     return (count);
 }
 
-int print_percent(__attribute__((unused)) va_list args) {
-  return (_putchar('%'));
+int handle_percent(va_list *args) {
+    (void)args; // Unused parameter
+    return _putchar('%');
 }
 
+//* Struct to associate specifiers with handler functions*/
 typedef struct {
     char specifier;
-    int (*f)(va_list);
-} format_t;
+    handler_func handler;
+} format_specifier;
 
+/* Array of format specifiers and their handlers*/
+format_specifier specifiers[] = {
+    {'c', handle_char},
+    {'s', handle_string},
+    {'%', handle_percent},
+    {0, NULL} /* Null terminator*/
+};
+
+/* Custom printf function*/
 int _printf(const char *format, ...) {
     va_list args;
-    int count = 0;
-    int i;
-    format_t formats[] = {
-        {'c', print_char},
-        {'s', print_string},
-        {'%', print_percent},
-        {'\0', NULL}
-    };
-
+    int count = 0, i;
     va_start(args, format);
-    
+
     while (*format) {
         if (*format == '%') {
             format++;
-            for (i = 0; formats[i].specifier; i++) {
-                if (formats[i].specifier == *format) {
-                    count += formats[i].f(args);
+            for (i = 0; specifiers[i].specifier; i++) {
+                if (*format == specifiers[i].specifier) {
+                    count += specifiers[i].handler(&args);
                     break;
                 }
             }
-            if (formats[i].specifier == '\0') {
+            if (!specifiers[i].specifier) {
+	      /* Handle unknown format specifier*/
                 count += _putchar('%');
-                if (*format != '\0') {
-                    count += _putchar(*format);
-                }
+                count += _putchar(*format);
             }
         } else {
             count += _putchar(*format);
@@ -75,3 +79,5 @@ int _printf(const char *format, ...) {
     va_end(args);
     return (count);
 }
+
+
