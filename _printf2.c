@@ -13,9 +13,11 @@ int handle_char(va_list *args) {
 
 /* Handle string specifier */
 int handle_string(va_list *args) {
-    char *s = va_arg(*args, char *);
+    char *s; va_arg(*args, char *);
     int count = 0;
-
+    
+    *s = va_arg(*args, char *);
+     
     if (!s)
         s = "(null)";
     while (*s)
