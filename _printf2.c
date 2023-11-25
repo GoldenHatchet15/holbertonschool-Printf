@@ -13,11 +13,9 @@ int handle_char(va_list *args) {
 
 /* Handle string specifier */
 int handle_string(va_list *args) {
-    char *s; va_arg(*args, char *);
+    char *s = va_arg(*args, char *);
     int count = 0;
     
-    *s = va_arg(*args, char *);
-     
     if (!s)
         s = "(null)";
     while (*s)
@@ -34,10 +32,12 @@ int handle_percent(va_list *args) {
 /* Handle integer specifier */
 int handle_int(va_list *args) {
     int num = va_arg(*args, int);
-    char buffer[11]; 
-    sprintf(buffer, "%d", num);
-    char *s = buffer;
+    char buffer[11];
+    char *s;
     int count = 0;
+
+    sprintf(buffer, "%d", num);
+    s = buffer;
     while (*s) {
         count += _putchar(*s++);
     }
