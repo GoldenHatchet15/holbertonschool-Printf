@@ -1,0 +1,34 @@
+CUSTOM_PRINTF(3) - Custom Implementation of printf Function
+
+NAME
+    custom_printf - custom implementation of printf function
+
+SYNOPSIS
+    #include <main.h>
+
+    int _printf(const char *format, ...);
+
+DESCRIPTION
+    The _printf function is a custom implementation of the standard printf function. It outputs a formatted string to stdout, supporting a subset of format specifiers.
+
+    Supported format specifiers:
+    %c - prints a single character.
+    %s - prints a string.
+    %% - prints a percent sign.
+    %d - prints a decimal (base 10) number.
+    %i - prints an integer in base 10.
+
+RETURN VALUE
+    Returns the number of characters printed (excluding the null byte used to end output to strings).
+
+NOTES
+    This function is a custom implementation and may not support all the features of the standard printf function found in the C standard library.
+
+AUTHORS
+    Written by Ladie Juarbe and Raphael Santos.
+
+DATE
+    November 26, 2023
+
+SEE ALSO
+    printf(3)
