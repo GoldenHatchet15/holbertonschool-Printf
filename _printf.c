@@ -64,7 +64,7 @@ int _printf(const char *format, ...) {
         if (*format == '%') {
             format++;
             if (*format == '\0') {
-                count += _putchar('%'); // Or handle differently if desired
+                count += _putchar('%'); 
                 break;
             }
             for (i = 0; specifiers[i].specifier; i++) {
